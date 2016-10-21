@@ -6,7 +6,8 @@ import ua.com.codefire.chat.net.Server;
 import java.awt.*;
 
 /**
- * Created by human on 10/11/16.
+ * Vadim Pogorielov GIT demo project
+ *                        CodeFireUA
  */
 public class Main {
 
@@ -23,6 +24,7 @@ public class Main {
 
                 server.add(mainFrame);
                 mainFrame.setVisible(true);
+
             }
         });
 
