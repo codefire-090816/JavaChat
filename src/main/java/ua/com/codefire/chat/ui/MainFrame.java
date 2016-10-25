@@ -1,8 +1,5 @@
 package ua.com.codefire.chat.ui;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 import ua.com.codefire.chat.model.ChatContact;
 import ua.com.codefire.chat.model.ChatMessage;
 import ua.com.codefire.chat.net.ChatListener;
@@ -45,6 +42,8 @@ public class MainFrame extends JFrame implements ChatListener {
     // ------------------------------
     private List<ChatContact> chatContactList;
     private ChatContact currentChatContact;
+    private boolean isProperties = false;
+    private String paramString;
 
     public MainFrame(String title) throws HeadlessException {
         super(title);
@@ -61,10 +60,43 @@ public class MainFrame extends JFrame implements ChatListener {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                PropertiesForm propertiesForm = new PropertiesForm();
+                if (isProperties) return;
+
+                final JFrame propertiesForm = new JFrame();
                 propertiesForm.setTitle("Properties");
-                propertiesForm.setSize(350, 150);
+                propertiesForm.setSize(350, 100);
+                JPanel panel1Prop = new JPanel();
+                panel1Prop.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+                JLabel label1Prop = new JLabel();
+                label1Prop.setText("Enter string :");
+                panel1Prop.add(label1Prop);
+
+                final JTextField tField1Prop = new JTextField(10);
+                panel1Prop.add(tField1Prop);
+
+                JButton button1PropSave = new JButton();
+                button1PropSave.setText("Save");
+                button1PropSave.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        paramString = tField1Prop.getText();
+                        taMessage.setText(paramString);
+                    }
+                });
+
+                panel1Prop.add(button1PropSave);
+                propertiesForm.setContentPane(panel1Prop);
+                propertiesForm.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        isProperties = false;
+                    }
+                });
+
                 propertiesForm.setVisible(true);
+
+                isProperties = true;
 
             }
         });
